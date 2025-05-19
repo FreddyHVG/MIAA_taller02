@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Balance Hídrico UTPL</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #0c3c78;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    header img {
+      height: 80px;
+    }
+    .titulo {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .contenedor {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    form {
+      margin-bottom: 30px;
+    }
+    label {
+      font-weight: bold;
+      color: #0c3c78;
+    }
+    input {
+      padding: 6px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+    input[type="submit"] {
+      background-color: #0c3c78;
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      width: auto;
+    }
+    .resultado, .grafico {
+      margin-top: 20px;
+      padding: 20px;
+      background: #eaf0f6;
+      border-left: 5px solid #0c3c78;
+    }
+    img.grafico {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="{{ url_for('static', filename='images/utpl2.png') }}" alt="Logo UTPL">
+    <div class="titulo">
+      <h1>UNIVERSIDAD TÉCNICA PARTICULAR DE LOJA</h1>
+      <h2>MAESTRÍA EN INTELIGENCIA ARTIFICIAL APLICADA</h2>
+      <p><strong>Visualización y predicción del balance hídrico</strong></p>
+    </div>
+  </header>
+
+  <div class="contenedor">
+    <h3>🌧️ Balance hídrico mensual</h3>
+    <form action="{{ url_for('balance') }}" method="get">
+      <label>Año:</label>
+      <input type="number" name="year" value="2020">
+      <label>Mes:</label>
+      <input type="number" name="month" value="1">
+      <input type="submit" value="Ver mapa">
+    </form>
+
+    {% if map_html %}
+      <div class="resultado">
+        {{ map_html|safe }}
+      </div>
+    {% endif %}
+
+    <hr>
+
+    <h3>📊 Predicción de balance futuro</h3>
+    <form action="{{ url_for('predecir') }}" method="get">
+      <label>Año inicial:</label>
+      <input type="number" name="year_ini" value="2030">
+      <label>Año final:</label>
+      <input type="number" name="year_end" value="2050">
+      <input type="submit" value="Predecir">
+    </form>
+
+    {% if img_base64 %}
+      <div class="grafico">
+        <img src="data:image/png;base64,{{ img_base64 }}" alt="Gráfico de predicción" class="grafico">
+      </div>
+    {% endif %}
+  </div>
+</body>
+</html>
