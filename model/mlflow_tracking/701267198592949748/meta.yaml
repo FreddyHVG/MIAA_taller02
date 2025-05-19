@@ -1,0 +1,6 @@
+artifact_location: mlflow-artifacts:/701267198592949748
+creation_time: 1747622107551
+experiment_id: '701267198592949748'
+last_update_time: 1747622107551
+lifecycle_stage: active
+name: balance_hidrico_modelo_lstm
